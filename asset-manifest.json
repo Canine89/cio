@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/cio-gamble/static/js/main.4d34c4d1.chunk.js",
-    "main.js.map": "/cio-gamble/static/js/main.4d34c4d1.chunk.js.map",
-    "runtime-main.js": "/cio-gamble/static/js/runtime-main.73aa3a74.js",
-    "runtime-main.js.map": "/cio-gamble/static/js/runtime-main.73aa3a74.js.map",
-    "static/js/2.87e15a58.chunk.js": "/cio-gamble/static/js/2.87e15a58.chunk.js",
-    "static/js/2.87e15a58.chunk.js.map": "/cio-gamble/static/js/2.87e15a58.chunk.js.map",
-    "index.html": "/cio-gamble/index.html",
-    "static/js/2.87e15a58.chunk.js.LICENSE.txt": "/cio-gamble/static/js/2.87e15a58.chunk.js.LICENSE.txt"
+    "main.js": "/cio/static/js/main.4d34c4d1.chunk.js",
+    "main.js.map": "/cio/static/js/main.4d34c4d1.chunk.js.map",
+    "runtime-main.js": "/cio/static/js/runtime-main.201a4371.js",
+    "runtime-main.js.map": "/cio/static/js/runtime-main.201a4371.js.map",
+    "static/js/2.1fc07a78.chunk.js": "/cio/static/js/2.1fc07a78.chunk.js",
+    "static/js/2.1fc07a78.chunk.js.map": "/cio/static/js/2.1fc07a78.chunk.js.map",
+    "index.html": "/cio/index.html",
+    "static/js/2.1fc07a78.chunk.js.LICENSE.txt": "/cio/static/js/2.1fc07a78.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.73aa3a74.js",
-    "static/js/2.87e15a58.chunk.js",
+    "static/js/runtime-main.201a4371.js",
+    "static/js/2.1fc07a78.chunk.js",
     "static/js/main.4d34c4d1.chunk.js"
   ]
 }
