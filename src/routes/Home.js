@@ -1,11 +1,15 @@
 import { dbService } from "fbase";
 import { useEffect, useState } from "react";
+import { Container, Box, Button } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
+
 import CoinBoard from "components/CoinBoard";
-import { Container, Button, Box } from "@chakra-ui/react";
 
 const Home = ({ user }) => {
   const [board, setBoard] = useState([]);
   const [userCoin, setUserCoin] = useState(0);
+  const [buttonClicked, setButtonClicked] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     dbService.collection("cio").onSnapshot((snapshot) => {
@@ -26,8 +30,7 @@ const Home = ({ user }) => {
     });
   }, []);
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
+  const addCoin = async () => {
     const documentId = board.find((data) => data.uid === user.uid);
     if (documentId) {
       await dbService
@@ -47,13 +50,37 @@ const Home = ({ user }) => {
 
   return (
     <Container>
-      <Box padding="4" bg="gray.400">
-        {user.displayName}님의 현재 코인은 {userCoin}입니다.
-        <form onSubmit={onSubmit}>
-          <Button type="submit">오늘의 코인 적립</Button>
-        </form>
+      <Box padding="4" bg="#f8eded">
+        {buttonClicked ? (
+          <Button mr="-px" bg="#eeb76b" border="2px" borderColor="#E9AD03">
+            🙌 적립 완료!
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            mr="-px"
+            bg="#eeb76b"
+            border="2px"
+            borderColor="#E9AD03"
+            onClick={() => {
+              toast({
+                title: "코인이 적립되었습니다.",
+                description: "적립 코인은 10원입니다.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
+              addCoin();
+              setButtonClicked(true);
+            }}
+          >
+            💰 오늘의 코인 적립
+          </Button>
+        )}
       </Box>
-      <CoinBoard user={user} board={board} />
+      <Box padding="4" bg="#f6dfeb">
+        <CoinBoard user={user} board={board} />
+      </Box>
     </Container>
   );
 };

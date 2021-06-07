@@ -20,8 +20,15 @@ function App() {
     <ChakraProvider>
       {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "initializing..."}
       <Container>
-        <Box padding="4" bg="gray.100">
-        <footer>cio-gamble, {new Date().getFullYear()} </footer>
+        <Box
+          padding="4"
+          bg="#e4bad4"
+          borderBottomLeftRadius={5}
+          borderBottomRightRadius={5}
+        >
+          <footer style={{ color: "white", fontWeight: "bold" }}>
+            🦄 출첵코인, {new Date().getFullYear()}{" "}
+          </footer>
         </Box>
       </Container>
     </ChakraProvider>
