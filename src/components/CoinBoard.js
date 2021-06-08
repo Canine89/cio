@@ -127,8 +127,10 @@ const CoinBoard = ({ board }) => {
                     <>🥇{data.displayName}</>
                   ) : index === 1 ? (
                     <>🥈{data.displayName}</>
-                  ) : (
+                  ) : index === 2 ? (
                     <>🥉{data.displayName}</>
+                  ) : (
+                    <>{data.displayName}</>
                   )}
                   <Badge ml={2} colorScheme="">
                     {index === 0 ? (

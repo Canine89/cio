@@ -3,6 +3,7 @@ import {
   Route,
   Switch,
   Redirect,
+  BrowserRouter 
 } from "react-router-dom";
 import Home from "routes/Home";
 import Auth from "routes/Auth";
@@ -11,6 +12,7 @@ import Navigation from "./Navigation";
 
 const AppRouter = ({ isLoggedIn }) => {
   return (
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
     <Router>
       {isLoggedIn && <Navigation user={isLoggedIn} />}
       <Switch>
@@ -31,6 +33,7 @@ const AppRouter = ({ isLoggedIn }) => {
         <Redirect from="*" to="/" />
       </Switch>
     </Router>
+    </BrowserRouter>
   );
 };
 
