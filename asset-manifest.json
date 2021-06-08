@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "https://canine89.github.io/cio/static/js/main.b56c3eb3.chunk.js",
-    "main.js.map": "https://canine89.github.io/cio/static/js/main.b56c3eb3.chunk.js.map",
+    "main.js": "https://canine89.github.io/cio/static/js/main.d70094ff.chunk.js",
+    "main.js.map": "https://canine89.github.io/cio/static/js/main.d70094ff.chunk.js.map",
     "runtime-main.js": "https://canine89.github.io/cio/static/js/runtime-main.eefef748.js",
     "runtime-main.js.map": "https://canine89.github.io/cio/static/js/runtime-main.eefef748.js.map",
     "static/js/2.78c9ddc8.chunk.js": "https://canine89.github.io/cio/static/js/2.78c9ddc8.chunk.js",
@@ -12,6 +12,6 @@
   "entrypoints": [
     "static/js/runtime-main.eefef748.js",
     "static/js/2.78c9ddc8.chunk.js",
-    "static/js/main.b56c3eb3.chunk.js"
+    "static/js/main.d70094ff.chunk.js"
   ]
 }
