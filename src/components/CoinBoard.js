@@ -102,8 +102,16 @@ const Gold = styled.div`
   padding-left: 5px;
   margin-bottom: 4px;
 `;
-const bronze = styled.div`
+const Bronze = styled.div`
   background-color: #b08d57;
+  color: #ffffff;
+  border-radius: 2px;
+  padding-right: 5px;
+  padding-left: 5px;
+  margin-bottom: 4px;
+`;
+const Normal = styled.div`
+  background-color: #D3D3D3;
   color: #ffffff;
   border-radius: 2px;
   padding-right: 5px;
@@ -112,7 +120,6 @@ const bronze = styled.div`
 `;
 
 const CoinBoard = ({ board }) => {
-  console.log(board);
   return (
     <List spacing={3}>
       {board
@@ -137,8 +144,12 @@ const CoinBoard = ({ board }) => {
                       <Rainbow>{index + 1}등</Rainbow>
                     ) : index === 1 ? (
                       <Gold>{index + 1}등</Gold>
-                    ) : (
+                    ) : index === 2 ? (
                       <Silver>{index + 1}등</Silver>
+                    ) : index === 3 ? (
+                      <Bronze>{index + 1}등</Bronze>
+                    ) : (
+                      <Normal>{index + 1}등</Normal>
                     )}
                   </Badge>
                 </Text>

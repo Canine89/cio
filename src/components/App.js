@@ -1,5 +1,5 @@
 import AppRouter from "components/Router";
-import { ChakraProvider, Container, Box } from "@chakra-ui/react";
+import { ChakraProvider, Container, Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { authService } from "fbase";
 
@@ -26,9 +26,9 @@ function App() {
           borderBottomLeftRadius={5}
           borderBottomRightRadius={5}
         >
-          <footer style={{ color: "white", fontWeight: "bold" }}>
+          <Text style={{ color: "white", fontWeight: "bold" }}>
             🦄 출첵코인, {new Date().getFullYear()}{" "}
-          </footer>
+          </Text>
         </Box>
       </Container>
     </ChakraProvider>
