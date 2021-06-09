@@ -6,6 +6,8 @@ import {
   Box,
   Text,
   Badge,
+  Button,
+  Spacer
 } from "@chakra-ui/react";
 import styled from "styled-components";
 
@@ -111,7 +113,7 @@ const Bronze = styled.div`
   margin-bottom: 4px;
 `;
 const Normal = styled.div`
-  background-color: #D3D3D3;
+  background-color: #d3d3d3;
   color: #ffffff;
   border-radius: 2px;
   padding-right: 5px;
@@ -128,32 +130,34 @@ const CoinBoard = ({ board }) => {
           <ListItem key={data.id}>
             <Flex>
               <Avatar src={data.photoURL} />
-              <Box ml="3">
-                <Text fontWeight="bold">
-                  {index === 0 ? (
-                    <>🥇{data.displayName}</>
-                  ) : index === 1 ? (
-                    <>🥈{data.displayName}</>
-                  ) : index === 2 ? (
-                    <>🥉{data.displayName}</>
-                  ) : (
-                    <>{data.displayName}</>
-                  )}
-                  <Badge ml={2} colorScheme="">
+              <Box>
+                <Box ml="5">
+                  <Text fontWeight="bold">
                     {index === 0 ? (
-                      <Rainbow>{index + 1}등</Rainbow>
+                      <>🥇{data.displayName}</>
                     ) : index === 1 ? (
-                      <Gold>{index + 1}등</Gold>
+                      <>🥈{data.displayName}</>
                     ) : index === 2 ? (
-                      <Silver>{index + 1}등</Silver>
-                    ) : index === 3 ? (
-                      <Bronze>{index + 1}등</Bronze>
+                      <>🥉{data.displayName}</>
                     ) : (
-                      <Normal>{index + 1}등</Normal>
+                      <>{data.displayName}</>
                     )}
-                  </Badge>
-                </Text>
-                <Text fontSize="sm">{data.coin}</Text>
+                    <Badge ml={2} colorScheme="">
+                      {index === 0 ? (
+                        <Rainbow>{index + 1}등</Rainbow>
+                      ) : index === 1 ? (
+                        <Gold>{index + 1}등</Gold>
+                      ) : index === 2 ? (
+                        <Silver>{index + 1}등</Silver>
+                      ) : index === 3 ? (
+                        <Bronze>{index + 1}등</Bronze>
+                      ) : (
+                        <Normal>{index + 1}등</Normal>
+                      )}
+                    </Badge>
+                  </Text>
+                  <Text fontSize="sm">{data.coin}</Text>
+                </Box>
               </Box>
             </Flex>
           </ListItem>
