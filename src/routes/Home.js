@@ -4,7 +4,7 @@ import { Container, Box, Button } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 
 import CoinBoard from "components/CoinBoard";
-import Gamble from "components/Gamble";
+import Announcement from "components/Announcement";
 
 const Home = ({ user }) => {
   const [board, setBoard] = useState([]);
@@ -113,7 +113,7 @@ const Home = ({ user }) => {
         <CoinBoard user={user} board={board} />
       </Box>
       <Box padding="4" bg="#f6dfeb">
-        <Gamble />
+        <Announcement />
       </Box>
     </Container>
   );
