@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "https://canine89.github.io/cio/static/js/main.b9a563a5.chunk.js",
-    "main.js.map": "https://canine89.github.io/cio/static/js/main.b9a563a5.chunk.js.map",
-    "runtime-main.js": "https://canine89.github.io/cio/static/js/runtime-main.eefef748.js",
-    "runtime-main.js.map": "https://canine89.github.io/cio/static/js/runtime-main.eefef748.js.map",
-    "static/js/2.cdb9b83b.chunk.js": "https://canine89.github.io/cio/static/js/2.cdb9b83b.chunk.js",
-    "static/js/2.cdb9b83b.chunk.js.map": "https://canine89.github.io/cio/static/js/2.cdb9b83b.chunk.js.map",
-    "index.html": "https://canine89.github.io/cio/index.html",
-    "static/js/2.cdb9b83b.chunk.js.LICENSE.txt": "https://canine89.github.io/cio/static/js/2.cdb9b83b.chunk.js.LICENSE.txt"
+    "main.js": "/cio/static/js/main.e8f94449.chunk.js",
+    "main.js.map": "/cio/static/js/main.e8f94449.chunk.js.map",
+    "runtime-main.js": "/cio/static/js/runtime-main.201a4371.js",
+    "runtime-main.js.map": "/cio/static/js/runtime-main.201a4371.js.map",
+    "static/js/2.1333be45.chunk.js": "/cio/static/js/2.1333be45.chunk.js",
+    "static/js/2.1333be45.chunk.js.map": "/cio/static/js/2.1333be45.chunk.js.map",
+    "index.html": "/cio/index.html",
+    "static/js/2.1333be45.chunk.js.LICENSE.txt": "/cio/static/js/2.1333be45.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.eefef748.js",
-    "static/js/2.cdb9b83b.chunk.js",
-    "static/js/main.b9a563a5.chunk.js"
+    "static/js/runtime-main.201a4371.js",
+    "static/js/2.1333be45.chunk.js",
+    "static/js/main.e8f94449.chunk.js"
   ]
 }
