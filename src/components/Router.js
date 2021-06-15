@@ -3,36 +3,36 @@ import {
   Route,
   Switch,
   Redirect,
-  BrowserRouter 
+  BrowserRouter,
 } from "react-router-dom";
 import Home from "routes/Home";
 import Auth from "routes/Auth";
 import Profile from "routes/Profile";
 import Navigation from "./Navigation";
 
-const AppRouter = ({ isLoggedIn }) => {
+const AppRouter = ({ user }) => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-    <Router>
-      {isLoggedIn && <Navigation user={isLoggedIn} />}
-      <Switch>
-        {isLoggedIn ? (
-          <>
+      <Router>
+        {user && <Navigation user={user} />}
+        <Switch>
+          {user ? (
+            <>
+              <Route exact path="/">
+                <Home user={user} />
+              </Route>
+              <Route exact path="/profile">
+                <Profile user={user} />
+              </Route>
+            </>
+          ) : (
             <Route exact path="/">
-              <Home user={isLoggedIn} />
+              <Auth />
             </Route>
-            <Route exact path="/profile">
-              <Profile user={isLoggedIn} />
-            </Route>
-          </>
-        ) : (
-          <Route exact path="/">
-            <Auth />
-          </Route>
-        )}
-        <Redirect from="*" to="/" />
-      </Switch>
-    </Router>
+          )}
+          <Redirect from="*" to="/" />
+        </Switch>
+      </Router>
     </BrowserRouter>
   );
 };

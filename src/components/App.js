@@ -3,22 +3,24 @@ import { ChakraProvider, Container, Box, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { authService } from "fbase";
 
-function App() {
+const App = () => {
   const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userObject, setUserObject] = useState(false);
+
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(user);
+        setUserObject(user);
       } else {
-        setIsLoggedIn(false);
+        setUserObject(false);
       }
     });
     setInit(true);
   }, []);
+
   return (
     <ChakraProvider>
-      {init ? <AppRouter isLoggedIn={isLoggedIn} /> : "initializing..."}
+      {init ? <AppRouter user={userObject} /> : "initializing..."}
       <Container>
         <Box
           padding="4"
@@ -33,6 +35,6 @@ function App() {
       </Container>
     </ChakraProvider>
   );
-}
+};
 
 export default App;

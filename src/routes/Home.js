@@ -1,101 +1,101 @@
 import { dbService } from "fbase";
 import { useEffect, useState } from "react";
-import { Container, Box, Button, Spacer, Flex } from "@chakra-ui/react";
+import { Container, Box, Button, Flex, ButtonGroup } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 
 import CoinBoard from "components/CoinBoard";
 import Announcement from "components/Announcement";
 
 const Home = ({ user }) => {
-  const [board, setBoard] = useState([]);
   const [userCoin, setUserCoin] = useState(0);
+  const [userCoupon, setUserCoupon] = useState(0);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [board, setBoard] = useState([]);
   const toast = useToast();
 
   useEffect(() => {
-    dbService.collection("cio").onSnapshot((snapshot) => {
-      const newArray = snapshot.docs.map((document) => ({
-        id: document.id,
-        ...document.data(),
+    dbService.collection("cio").onSnapshot((_snapshot) => {
+      const newArray = _snapshot.docs.map((_document) => ({
+        id: _document.id,
+        ..._document.data(),
       }));
+
+      // 실시간 DB(board)를 board에 계속 반영
       setBoard(newArray);
-      if (newArray.length > 0) {
-        setUserCoin(
-          newArray
-            .filter((data) => data.uid === user.uid)
-            .reduce((pre, val) => {
-              return pre + val.coin;
-            }, 0)
-        );
+
+      const _matchDocument = getMatchSavedDocumentByUid(newArray);
+      if (_matchDocument) {
+        setUserCoupon(_matchDocument.coupon);
+        setUserCoin(_matchDocument.coin);
       }
     });
   }, []);
 
   useEffect(() => {
-    const matchUserSavedData = getMatchUserSavedData();
+    hanbunman();
+  }, []);
 
-    const curr = new Date();
-    const utc = curr.getTime() + curr.getTimezoneOffset() * 60 * 1000;
-    const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
-    const kr_curr = new Date(utc + KR_TIME_DIFF);
+  const hanbunman = async () => {
+    const test = await dbService.collection("cio").get();
+    const result = [];
+    test.forEach((document) => {
+      result.push(document.data());
+    });
 
-    if (matchUserSavedData) {
-      setButtonClicked(
-        checkTime(
-          kr_curr,
-          new Date(matchUserSavedData.updatedAt + KR_TIME_DIFF)
-        )
-      );
+    if (getMatchSavedDocumentByUid(result) === undefined) {
+      firstUserSetup();
     }
-  }, [board]);
-
-  const checkTime = (now, last) => {
-    const nowDateString =
-      now.getFullYear().toString() +
-      now.getMonth().toString() +
-      now.getDate().toString();
-    const lastDateString =
-      last.getFullYear().toString() +
-      last.getMonth().toString() +
-      last.getDate().toString();
-      
-    return nowDateString >= lastDateString;
   };
 
-  const getMatchUserSavedData = () => {
-    return board.filter((data) => data.uid === user.uid)[0];
+  const firstUserSetup = async () => {
+    if (user) {
+      await dbService.collection("cio").add({
+        coin: 0,
+        coupon: 1,
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        couponTimeStamp: Date.now(),
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      });
+    }
   };
 
-  const getRandomInt = (min, max) => {
+  const isFirstFreeCouponInToday = (_time) => {
+    const lastDate = new Date(_time * 1);
+    const nowDate = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      new Date().getDate()
+    );
+    console.log(nowDate, lastDate);
+    return nowDate > lastDate;
+  };
+
+  const getMatchSavedDocumentByUid = (_board) => {
+    return _board.filter((_data) => _data.uid === user.uid)[0];
+  };
+
+  const getRandomInt = (_min, _max) => {
     var byteArray = new Uint8Array(1);
     window.crypto.getRandomValues(byteArray);
 
-    var range = max - min + 1;
+    var range = _max - _min + 1;
     var max_range = 256;
     if (byteArray[0] >= Math.floor(max_range / range) * range)
-      return getRandomInt(min, max);
-    return min + (byteArray[0] % range);
+      return getRandomInt(_min, _max);
+    return _min + (byteArray[0] % range);
   };
 
-  const addCoin = async () => {
-    const documentId = board.find((data) => data.uid === user.uid);
+  const buyCoin = async (_document, _) => {
     const randomCoin = getRandomInt(0, 99);
 
-    if (documentId) {
-      await dbService.doc(`cio/${documentId.id}`).update({
+    if (_document) {
+      await dbService.doc(`cio/${_document.id}`).update({
         coin: userCoin + randomCoin,
-        coupon: getMatchUserSavedData().coupon + 1,
+        coupon: userCoupon,
         updatedAt: Date.now(),
-      });
-    } else {
-      await dbService.collection("cio").add({
-        coin: randomCoin,
-        coupon: 1,
-        createdAt: Date.now(),
-        uid: user.uid,
-        displayName: user.displayName,
-        updatedAt: Date.now(),
-        photoURL: user.photoURL,
       });
     }
 
@@ -106,8 +106,6 @@ const Home = ({ user }) => {
       duration: 9000,
       isClosable: true,
     });
-
-    setButtonClicked(true);
   };
 
   return (
@@ -117,7 +115,7 @@ const Home = ({ user }) => {
           <Box>
             {buttonClicked ? (
               <Button bg="#eeb76b" border="2px" borderColor="#E9AD03">
-                🙌 적립 완료!
+                🎟️ 무료 쿠폰 받기
               </Button>
             ) : (
               <Button
@@ -126,16 +124,27 @@ const Home = ({ user }) => {
                 bg="#eeb76b"
                 border="2px"
                 borderColor="#E9AD03"
-                onClick={addCoin}
+                onClick={buyCoin}
               >
                 💰 오늘의 코인 적립
               </Button>
             )}
           </Box>
           <Box>
-            <Button bg="#e798ae" border="2px" ml={4} borderColor="#e4bad4">
-              🎟️ 티켓 구입
-            </Button>
+            <ButtonGroup>
+              <Button
+                bg="#e798ae"
+                border="2px"
+                ml={4}
+                mr="-px"
+                borderColor="#e4bad4"
+              >
+                🎟️ 쿠폰 구입
+              </Button>
+              <Button bg="#e798ae" border="2px" borderColor="#e4bad4">
+                {userCoupon}장 쿠폰 보유
+              </Button>
+            </ButtonGroup>
           </Box>
         </Flex>
       </Box>
