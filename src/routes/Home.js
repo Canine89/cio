@@ -9,7 +9,8 @@ import Announcement from "components/Announcement";
 const Home = ({ user }) => {
   const [userCoin, setUserCoin] = useState(0);
   const [userCoupon, setUserCoupon] = useState(0);
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [matchDocument, setMatchDocument] = useState(false);
+  const [freeButtonClicked, setFreeButtonClicked] = useState(false);
   const [board, setBoard] = useState([]);
   const toast = useToast();
 
@@ -23,10 +24,12 @@ const Home = ({ user }) => {
       // 실시간 DB(board)를 board에 계속 반영
       setBoard(newArray);
 
+      // match 유저를 찾으면 쿠폰과 코인 등록
       const _matchDocument = getMatchSavedDocumentByUid(newArray);
       if (_matchDocument) {
         setUserCoupon(_matchDocument.coupon);
         setUserCoin(_matchDocument.coin);
+        setMatchDocument(_matchDocument);
       }
     });
   }, []);
@@ -35,9 +38,14 @@ const Home = ({ user }) => {
     hanbunman();
   }, []);
 
+  useEffect(() => {
+    if(matchDocument) setFreeButtonClicked(!isFirstTry(matchDocument.couponTimeStamp));
+  }, [matchDocument])
+
   const hanbunman = async () => {
     const test = await dbService.collection("cio").get();
     const result = [];
+
     test.forEach((document) => {
       result.push(document.data());
     });
@@ -52,6 +60,7 @@ const Home = ({ user }) => {
       await dbService.collection("cio").add({
         coin: 0,
         coupon: 1,
+
         createdAt: Date.now(),
         updatedAt: Date.now(),
         couponTimeStamp: Date.now(),
@@ -62,7 +71,14 @@ const Home = ({ user }) => {
     }
   };
 
-  const isFirstFreeCouponInToday = (_time) => {
+  const getFreeCoupon = () => {
+    if (matchDocument) {
+      console.log(matchDocument);
+      console.log();
+    }
+  };
+
+  const isFirstTry = (_time) => {
     const lastDate = new Date(_time * 1);
     const nowDate = new Date(
       new Date().getFullYear(),
@@ -88,13 +104,13 @@ const Home = ({ user }) => {
     return _min + (byteArray[0] % range);
   };
 
-  const buyCoin = async (_document, _) => {
-    const randomCoin = getRandomInt(0, 99);
+  const buyCoin = async () => {
+    const randomCoin = getRandomInt(0, 35);
 
-    if (_document) {
-      await dbService.doc(`cio/${_document.id}`).update({
+    if (matchDocument && userCoupon > 0) {
+      await dbService.doc(`cio/${matchDocument.id}`).update({
         coin: userCoin + randomCoin,
-        coupon: userCoupon,
+        coupon: userCoupon - 1,
         updatedAt: Date.now(),
       });
     }
@@ -103,30 +119,46 @@ const Home = ({ user }) => {
       title: "코인이 적립되었습니다.",
       description: `코인이 ${randomCoin}개 적립되었습니다.`,
       status: "success",
-      duration: 9000,
+      duration: 1000,
       isClosable: true,
     });
   };
+
+  const buyCoupon = async () => {
+
+    if (matchDocument && userCoin > 20) {
+      await dbService.doc(`cio/${matchDocument.id}`).update({
+        coin: userCoin - 20,
+        coupon: userCoupon + 1,
+        updatedAt: Date.now(),
+      });
+    }
+  }
 
   return (
     <Container>
       <Box padding="4" bg="#f8eded">
         <Flex space="4">
           <Box>
-            {buttonClicked ? (
-              <Button bg="#eeb76b" border="2px" borderColor="#E9AD03">
-                🎟️ 무료 쿠폰 받기
-              </Button>
-            ) : (
+            {freeButtonClicked ? (
               <Button
-                type="submit"
                 mr="-px"
                 bg="#eeb76b"
                 border="2px"
                 borderColor="#E9AD03"
                 onClick={buyCoin}
+                disabled={userCoupon ? false : true}
               >
-                💰 오늘의 코인 적립
+                💰 코인 구매
+              </Button>
+            ) : (
+              <Button
+                bg="#eeb76b"
+                border="2px"
+                borderColor="#E9AD03"
+                onClick={getFreeCoupon}
+              >
+                🎟️ 무료 쿠폰 받기
               </Button>
             )}
           </Box>
@@ -138,11 +170,9 @@ const Home = ({ user }) => {
                 ml={4}
                 mr="-px"
                 borderColor="#e4bad4"
+                onClick={buyCoupon}
               >
-                🎟️ 쿠폰 구입
-              </Button>
-              <Button bg="#e798ae" border="2px" borderColor="#e4bad4">
-                {userCoupon}장 쿠폰 보유
+                🎟️ 쿠폰 구입({userCoupon}장 보유, 20원)
               </Button>
             </ButtonGroup>
           </Box>
