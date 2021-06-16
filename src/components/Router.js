@@ -8,6 +8,7 @@ import {
 import Home from "routes/Home";
 import Auth from "routes/Auth";
 import Profile from "routes/Profile";
+import Admin from "routes/Admin";
 import Navigation from "./Navigation";
 
 const AppRouter = ({ user }) => {
@@ -23,6 +24,9 @@ const AppRouter = ({ user }) => {
               </Route>
               <Route exact path="/profile">
                 <Profile user={user} />
+              </Route>
+              <Route exact path="/admin">
+                <Admin user={user} />
               </Route>
             </>
           ) : (

@@ -5,6 +5,7 @@ import { useToast } from "@chakra-ui/react";
 
 import CoinBoard from "components/CoinBoard";
 import Announcement from "components/Announcement";
+import Status from "components/Status";
 
 const Home = ({ user }) => {
   const [userCoin, setUserCoin] = useState(0);
@@ -61,7 +62,6 @@ const Home = ({ user }) => {
       await dbService.collection("cio").add({
         coin: 0,
         coupon: 1,
-
         createdAt: Date.now(),
         updatedAt: Date.now(),
         couponTimeStamp: Date.now(),
@@ -138,7 +138,7 @@ const Home = ({ user }) => {
   };
 
   const buyCoupon = async () => {
-    if (matchDocument && userCoin > 20) {
+    if (matchDocument && userCoin >= 20) {
       await dbService.doc(`cio/${matchDocument.id}`).update({
         coin: userCoin - 20,
         coupon: userCoupon + 1,
@@ -149,6 +149,7 @@ const Home = ({ user }) => {
 
   return (
     <Container>
+      <Status matchDocument={matchDocument}/>
       <Box padding="4" bg="#f8eded">
         <Flex space="4">
           <Box>
@@ -183,9 +184,9 @@ const Home = ({ user }) => {
                 mr="-px"
                 borderColor="#e4bad4"
                 onClick={buyCoupon}
-                disabled={userCoin > 20 ? false : true}
+                disabled={userCoin >= 20 ? false : true}
               >
-                🎟️ 쿠폰 구입({userCoupon}장 보유, 20원)
+                🎟️ 쿠폰 구입(20원)
               </Button>
             </ButtonGroup>
           </Box>
