@@ -72,10 +72,13 @@ const Home = ({ user }) => {
     }
   };
 
-  const getFreeCoupon = () => {
+  const getFreeCoupon = async () => {
     if (matchDocument) {
-      console.log(matchDocument);
-      console.log();
+      await dbService.doc(`cio/${matchDocument.id}`).update({
+        coupon: userCoupon + 1,
+        updatedAt: Date.now(),
+        couponTimeStamp: Date.now(),
+      });
     }
   };
 
