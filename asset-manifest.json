@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "https://canine89.github.io/cio/static/js/main.6494ded0.chunk.js",
-    "main.js.map": "https://canine89.github.io/cio/static/js/main.6494ded0.chunk.js.map",
+    "main.js": "https://canine89.github.io/cio/static/js/main.909c6231.chunk.js",
+    "main.js.map": "https://canine89.github.io/cio/static/js/main.909c6231.chunk.js.map",
     "runtime-main.js": "https://canine89.github.io/cio/static/js/runtime-main.eefef748.js",
     "runtime-main.js.map": "https://canine89.github.io/cio/static/js/runtime-main.eefef748.js.map",
-    "static/js/2.8aca9c4d.chunk.js": "https://canine89.github.io/cio/static/js/2.8aca9c4d.chunk.js",
-    "static/js/2.8aca9c4d.chunk.js.map": "https://canine89.github.io/cio/static/js/2.8aca9c4d.chunk.js.map",
+    "static/js/2.9e1ca7d7.chunk.js": "https://canine89.github.io/cio/static/js/2.9e1ca7d7.chunk.js",
+    "static/js/2.9e1ca7d7.chunk.js.map": "https://canine89.github.io/cio/static/js/2.9e1ca7d7.chunk.js.map",
     "index.html": "https://canine89.github.io/cio/index.html",
-    "static/js/2.8aca9c4d.chunk.js.LICENSE.txt": "https://canine89.github.io/cio/static/js/2.8aca9c4d.chunk.js.LICENSE.txt"
+    "static/js/2.9e1ca7d7.chunk.js.LICENSE.txt": "https://canine89.github.io/cio/static/js/2.9e1ca7d7.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.eefef748.js",
-    "static/js/2.8aca9c4d.chunk.js",
-    "static/js/main.6494ded0.chunk.js"
+    "static/js/2.9e1ca7d7.chunk.js",
+    "static/js/main.909c6231.chunk.js"
   ]
 }
