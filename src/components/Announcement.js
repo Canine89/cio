@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
 
 const Announcement = () => {
-    return <Text as="i">🎰 비-현실 코인 도박 업데이트 준비 중!</Text>
+    return <Text as="i">🎰 확률 5% 잭팟, 20% 평타, 80% 떡락</Text>
 }
 
 export default Announcement;

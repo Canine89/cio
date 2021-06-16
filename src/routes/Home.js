@@ -39,8 +39,9 @@ const Home = ({ user }) => {
   }, []);
 
   useEffect(() => {
-    if(matchDocument) setFreeButtonClicked(!isFirstTry(matchDocument.couponTimeStamp));
-  }, [matchDocument])
+    if (matchDocument)
+      setFreeButtonClicked(!isFirstTry(matchDocument.couponTimeStamp));
+  }, [matchDocument]);
 
   const hanbunman = async () => {
     const test = await dbService.collection("cio").get();
@@ -105,7 +106,19 @@ const Home = ({ user }) => {
   };
 
   const buyCoin = async () => {
-    const randomCoin = getRandomInt(0, 35);
+    let property = getRandomInt(1, 100);
+    let randomCoin = 0;
+
+    if (property > 80) {
+      randomCoin = getRandomInt(20, 35);
+      property = getRandomInt(1, 100);
+      // 20프로, 10프로
+      if (property > 90) {
+        randomCoin = getRandomInt(40, 50);
+      }
+    } else {
+      randomCoin = getRandomInt(1, 19);
+    }
 
     if (matchDocument && userCoupon > 0) {
       await dbService.doc(`cio/${matchDocument.id}`).update({
@@ -125,7 +138,6 @@ const Home = ({ user }) => {
   };
 
   const buyCoupon = async () => {
-
     if (matchDocument && userCoin > 20) {
       await dbService.doc(`cio/${matchDocument.id}`).update({
         coin: userCoin - 20,
@@ -133,7 +145,7 @@ const Home = ({ user }) => {
         updatedAt: Date.now(),
       });
     }
-  }
+  };
 
   return (
     <Container>
@@ -171,6 +183,7 @@ const Home = ({ user }) => {
                 mr="-px"
                 borderColor="#e4bad4"
                 onClick={buyCoupon}
+                disabled={userCoin > 20 ? false : true}
               >
                 🎟️ 쿠폰 구입({userCoupon}장 보유, 20원)
               </Button>
